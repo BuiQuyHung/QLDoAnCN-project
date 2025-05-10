@@ -1,0 +1,93 @@
+<h2>Quản lý Lớp</h2>
+
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+<div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
+<button (click)="batDauThemMoi()">Thêm mới Lớp</button>
+
+<h3>Danh sách Lớp</h3>
+<table *ngIf="danhSachLop.length > 0">
+    <thead>
+        <tr>
+            <th>Mã Lớp</th>
+            <th>Tên Lớp</th>
+            <th>Khóa Học</th>
+            <th>Chuyên Ngành</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let lop of danhSachLop" (click)="hienThiChiTiet(lop)" [class.selected]="lop === selectedLop">
+            <td>{{ lop.maLop }}</td>
+            <td>{{ lop.tenLop }}</td>
+            <td>{{ lop.khoaHoc }}</td>
+            <td>{{ lop.maChuyenNganh }}</td>
+            <td>
+                <button (click)="batDauChinhSua(lop); $event.stopPropagation()">Sửa</button>
+                <button (click)="xoaLop(lop.maLop); $event.stopPropagation()">Xóa</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div *ngIf="danhSachLop.length === 0">Không có lớp nào.</div>
+
+<app-popup *ngIf="isViewingDetails" title="Chi tiết Lớp" (closed)="dongPopupChiTiet()">
+    <div><strong>Mã Lớp:</strong> {{ selectedLop?.maLop }}</div>
+    <div><strong>Tên Lớp:</strong> {{ selectedLop?.tenLop }}</div>
+    <div><strong>Khóa Học:</strong> {{ selectedLop?.khoaHoc }}</div>
+    <div><strong>Mã Chuyên Ngành:</strong> {{ selectedLop?.maChuyenNganh }}</div>
+</app-popup>
+
+<app-popup *ngIf="isAddingNew" title="Thêm mới Lớp" (closed)="dongPopupThemMoi()">
+    <form (ngSubmit)="themLop()">
+        <div>
+            <label for="maLop">Mã Lớp:</label>
+            <input type="text" id="maLop" name="maLop" [(ngModel)]="newLop.maLop" required>
+        </div>
+        <div>
+            <label for="tenLop">Tên Lớp:</label>
+            <input type="text" id="tenLop" name="tenLop" [(ngModel)]="newLop.tenLop" required>
+        </div>
+        <div>
+            <label for="khoaHoc">Khóa Học:</label>
+            <input type="text" id="khoaHoc" name="khoaHoc" [(ngModel)]="newLop.khoaHoc">
+        </div>
+        <div>
+            <label for="maChuyenNganh">Chuyên Ngành:</label>
+            <select id="maChuyenNganh" name="maChuyenNganh" [(ngModel)]="newLop.maChuyenNganh" required>
+                <option value="" disabled>Chọn Chuyên ngành</option>
+                <option *ngFor="let chuyenNganh of chuyenNganhs" [value]="chuyenNganh.maChuyenNganh">{{
+                    chuyenNganh.tenChuyenNganh }}</option>
+            </select>
+        </div>
+        <button type="submit">Lưu</button>
+        <button type="button" (click)="huyThemMoi()">Hủy</button>
+    </form>
+</app-popup>
+
+<app-popup *ngIf="isEditing && editingLop" title="Chỉnh sửa Lớp" (closed)="dongPopupChinhSua()">
+    <form (ngSubmit)="capNhatLop()">
+        <div>
+            <label for="maLop">Mã Lớp:</label>
+            <input type="text" id="maLop" name="maLop" [(ngModel)]="editingLop.maLop" [readonly]="true">
+        </div>
+        <div>
+            <label for="tenLop">Tên Lớp:</label>
+            <input type="text" id="tenLop" name="tenLop" [(ngModel)]="editingLop.tenLop" required>
+        </div>
+        <div>
+            <label for="khoaHoc">Khóa Học:</label>
+            <input type="text" id="khoaHoc" name="khoaHoc" [(ngModel)]="editingLop.khoaHoc">
+        </div>
+        <div>
+            <label for="maChuyenNganh">Chuyên Ngành:</label>
+            <select id="maChuyenNganh" name="maChuyenNganh" [(ngModel)]="editingLop.maChuyenNganh" required>
+                <option value="" disabled>Chọn Chuyên ngành</option>
+                <option *ngFor="let chuyenNganh of chuyenNganhs" [value]="chuyenNganh.maChuyenNganh">{{
+                    chuyenNganh.tenChuyenNganh }}</option>
+            </select>
+        </div>
+        <button type="submit">Cập nhật</button>
+        <button type="button" (click)="huyChinhSua()">Hủy</button>
+    </form>
+</app-popup>

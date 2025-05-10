@@ -1,0 +1,87 @@
+<h2>Quản lý Ngành</h2>
+
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+<div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
+<button (click)="batDauThemMoi()">Thêm mới Ngành</button>
+
+<h3>Danh sách Ngành</h3>
+<table *ngIf="danhSachNganh.length > 0">
+    <thead>
+        <tr>
+            <th>Mã Ngành</th>
+            <th>Tên Ngành</th>
+            <th>Bộ Môn</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let nganh of danhSachNganh" (click)="hienThiChiTiet(nganh)"
+            [class.selected]="nganh === selectedNganh">
+            <td>{{ nganh.maNganh }}</td>
+            <td>{{ nganh.tenNganh }}</td>
+            <td>{{ nganh.maBoMon }}</td>
+            <td>
+                <button (click)="batDauChinhSua(nganh); $event.stopPropagation()">Sửa</button>
+                <button (click)="xoaNganh(nganh.maNganh); $event.stopPropagation()">Xóa</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div *ngIf="danhSachNganh.length === 0">Không có ngành nào.</div>
+
+<app-popup *ngIf="isViewingDetails" title="Chi tiết Ngành" (closed)="dongPopupChiTiet()">
+    <div><strong>Mã Ngành:</strong> {{ selectedNganh?.maNganh }}</div>
+    <div><strong>Tên Ngành:</strong> {{ selectedNganh?.tenNganh }}</div>
+    <div><strong>Mã Bộ Môn:</strong> {{ selectedNganh?.maBoMon }}</div>
+</app-popup>
+
+<app-popup *ngIf="isAddingNew" title="Thêm mới Ngành" (closed)="dongPopupThemMoi()">
+    <form (ngSubmit)="themNganh()">
+        <div>
+            <label for="maNganh">Mã Ngành:</label>
+            <input type="text" id="maNganh" name="maNganh" [(ngModel)]="newNganh.maNganh" required>
+        </div>
+        <div>
+            <label for="tenNganh">Tên Ngành:</label>
+            <input type="text" id="tenNganh" name="tenNganh" [(ngModel)]="newNganh.tenNganh" required>
+        </div>
+        <div>
+            <label for="maBoMon">Bộ Môn:</label>
+            <select id="maBoMon" name="maBoMon" [(ngModel)]="newNganh.maBoMon" required>
+                <option value="" disabled>Chọn Bộ môn</option>
+                <option *ngFor="let boMon of boMons" [value]="boMon.maBoMon">{{ boMon.tenBoMon }}</option>
+            </select>
+        </div>
+        <div class="button-group full-width">
+            <button type="submit">Lưu</button>
+            <button type="button" (click)="huyThemMoi()">Hủy</button>
+        </div>
+
+    </form>
+</app-popup>
+
+<app-popup *ngIf="isEditing && editingNganh" title="Chỉnh sửa Ngành" (closed)="dongPopupChinhSua()">
+    <form (ngSubmit)="capNhatNganh()">
+        <div>
+            <label for="maNganh">Mã Ngành:</label>
+            <input type="text" id="maNganh" name="maNganh" [(ngModel)]="editingNganh.maNganh" [readonly]="true">
+        </div>
+        <div>
+            <label for="tenNganh">Tên Ngành:</label>
+            <input type="text" id="tenNganh" name="tenNganh" [(ngModel)]="editingNganh.tenNganh" required>
+        </div>
+        <div>
+            <label for="maBoMon">Bộ Môn:</label>
+            <select id="maBoMon" name="maBoMon" [(ngModel)]="editingNganh.maBoMon" required>
+                <option value="" disabled>Chọn Bộ môn</option>
+                <option *ngFor="let boMon of boMons" [value]="boMon.maBoMon">{{ boMon.tenBoMon }}</option>
+            </select>
+        </div>
+        <div class="button-group full-width">
+            <button type="submit">Cập nhật</button>
+            <button type="button" (click)="huyChinhSua()">Hủy</button>
+        </div>
+
+    </form>
+</app-popup>

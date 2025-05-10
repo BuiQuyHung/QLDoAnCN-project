@@ -1,0 +1,15 @@
+<div class="login-container">
+    <h2 class="login-title">Đăng Nhập Hệ Thống</h2>
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="username">Tên đăng nhập:</label>
+            <input type="text" id="username" name="username" [(ngModel)]="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Mật khẩu:</label>
+            <input type="password" id="password" name="password" [(ngModel)]="password" required>
+        </div>
+        <button type="submit" class="login-button">Đăng Nhập</button>
+        <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+    </form>
+</div>

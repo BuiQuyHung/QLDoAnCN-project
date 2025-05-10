@@ -1,0 +1,13 @@
+<div class="dashboard-container">
+    <div class="sidebar">
+        <h1>Quản Lý Đồ Án</h1>
+        <ul class="menu">
+            <li *ngFor="let item of menuItems" routerLinkActive="active">
+                <a [routerLink]="item.path">{{ item.label }}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
+</div>

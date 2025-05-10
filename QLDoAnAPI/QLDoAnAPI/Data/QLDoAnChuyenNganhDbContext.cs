@@ -22,7 +22,11 @@ namespace QLDoAnAPI.Data
         public DbSet<DanhGia> DanhGias { get; set; }
         public DbSet<HoiDong> HoiDongs { get; set; }
         public DbSet<ThanhVienHoiDong> ThanhVienHoiDongs { get; set; }
-        public DbSet<TaiKhoan> TaiKhoans { get; set; }
+        public DbSet<TaiKhoanDangNhap> TaiKhoanDangNhap { get; set; }
+    
+        public DbSet<DotDoAn> DotDoAns { get; set; }
+        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
                        

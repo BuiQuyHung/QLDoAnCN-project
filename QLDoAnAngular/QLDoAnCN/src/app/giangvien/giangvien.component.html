@@ -1,0 +1,105 @@
+<h2>Quản lý Giảng Viên</h2>
+
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+<div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
+<button (click)="batDauThemMoi()">Thêm mới Giảng Viên</button>
+
+<h3>Danh sách Giảng Viên</h3>
+<table *ngIf="danhSachGiangVien.length > 0">
+    <thead>
+        <tr>
+            <th>Mã GV</th>
+            <th>Họ Tên</th>
+            <th>Email</th>
+            <th>Số Điện Thoại</th>
+            <th>Chuyên ngành</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let giangVien of danhSachGiangVien" (click)="hienThiChiTiet(giangVien)"
+            [class.selected]="giangVien === selectedGiangVien">
+            <td>{{ giangVien.maGV }}</td>
+            <td>{{ giangVien.hoTen }}</td>
+            <td>{{ giangVien.email }}</td>
+            <td>{{ giangVien.soDienThoai }}</td>
+            <td>{{ giangVien.chuyenNganh }}</td>
+            <td>
+                <button (click)="batDauChinhSua(giangVien); $event.stopPropagation()">Sửa</button>
+                <button (click)="xoaGiangVien(giangVien.maGV); $event.stopPropagation()">Xóa</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div *ngIf="danhSachGiangVien.length === 0">Không có giảng viên nào.</div>
+
+<app-popup *ngIf="isViewingDetails" title="Chi tiết Giảng Viên" (closed)="dongPopupChiTiet()">
+    <div><strong>Mã GV:</strong> {{ selectedGiangVien?.maGV }}</div>
+    <div><strong>Họ Tên:</strong> {{ selectedGiangVien?.hoTen }}</div>
+    <div><strong>Email:</strong> {{ selectedGiangVien?.email }}</div>
+    <div><strong>Số Điện Thoại:</strong> {{ selectedGiangVien?.soDienThoai }}</div>
+    <div><strong>Chuyên Ngành:</strong> {{ selectedGiangVien?.chuyenNganh }}</div>
+</app-popup>
+
+<app-popup *ngIf="isAddingNew" title="Thêm mới Giảng Viên" (closed)="dongPopupThemMoi()">
+    <form (ngSubmit)="themGiangVien()">
+        <div>
+            <label for="maGV">Mã GV:</label>
+            <input type="text" id="maGV" name="maGV" [(ngModel)]="newGiangVien.maGV" required>
+        </div>
+        <div>
+            <label for="hoTen">Họ Tên:</label>
+            <input type="text" id="hoTen" name="hoTen" [(ngModel)]="newGiangVien.hoTen" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" [(ngModel)]="newGiangVien.email" required>
+        </div>
+        <div>
+            <label for="soDienThoai">Số Điện Thoại:</label>
+            <input type="text" id="soDienThoai" name="soDienThoai" [(ngModel)]="newGiangVien.soDienThoai">
+        </div>
+        <div>
+            <label for="chuyenNganh">Chuyên ngành:</label>
+            <select id="chuyenNganh" name="chuyenNganh" [(ngModel)]="newGiangVien.chuyenNganh">
+                <option value="" disabled>Chọn chuyên ngành</option>
+                <option *ngFor="let cn of danhSachChuyenNganh" [value]="cn">{{ cn }}</option>
+            </select>
+        </div>
+        <div class="button-group full-width">
+            <button type="submit">Lưu</button>
+            <button type="button" (click)="huyThemMoi()">Hủy</button>
+        </div>
+
+    </form>
+</app-popup>
+
+<app-popup *ngIf="isEditing && editingGiangVien" title="Chỉnh sửa Giảng Viên" (closed)="dongPopupChinhSua()">
+    <form (ngSubmit)="capNhatGiangVien()">
+        <div>
+            <label for="maGV">Mã GV:</label>
+            <input type="text" id="maGV" name="maGV" [(ngModel)]="editingGiangVien.maGV" [readonly]="true">
+        </div>
+        <div>
+            <label for="hoTen">Họ Tên:</label>
+            <input type="text" id="hoTen" name="hoTen" [(ngModel)]="editingGiangVien.hoTen" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" [(ngModel)]="editingGiangVien.email" required>
+        </div>
+        <div>
+            <label for="soDienThoai">Số Điện Thoại:</label>
+            <input type="text" id="soDienThoai" name="soDienThoai" [(ngModel)]="editingGiangVien.soDienThoai">
+        </div>
+        <div>
+            <label for="chuyenNganh">Chuyên ngành:</label>
+            <input type="text" id="chuyenNganh" name="chuyenNganh" [(ngModel)]="editingGiangVien.chuyenNganh">
+        </div>
+        <div class="button-group full-width">
+            <button type="submit">Cập nhật</button>
+            <button type="button" (click)="huyChinhSua()">Hủy</button>
+        </div>
+    </form>
+</app-popup>

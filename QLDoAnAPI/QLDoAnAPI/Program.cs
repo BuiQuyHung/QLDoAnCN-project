@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using YourNamespace.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,6 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Cấu hình CORS (giữ nguyên)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
@@ -33,7 +33,8 @@ builder.Services.AddDbContext<QLDoAnChuyenNganhDbContext>(options =>
             sqlOptions.EnableRetryOnFailure();
         }));
 
-// Đăng ký Repository
+builder.Services.AddAuthorization();
+
 builder.Services.AddScoped<IKhoaRepository, KhoaRepository>();
 builder.Services.AddScoped<IBoMonRepository, BoMonRepository>();
 builder.Services.AddScoped<INganhRepository, NganhRepository>();
@@ -47,7 +48,7 @@ builder.Services.AddScoped<ITienDoRepository, TienDoRepository>();
 builder.Services.AddScoped<IDanhGiaRepository, DanhGiaRepository>();
 builder.Services.AddScoped<IHoiDongRepository, HoiDongRepository>();
 builder.Services.AddScoped<IThanhVienHoiDongRepository, ThanhVienHoiDongRepository>();
-builder.Services.AddScoped<ITaiKhoanRepository, TaiKhoanRepository>();
+builder.Services.AddScoped<IDotDoAnRepository, DotDoAnRepository>();
 // ...
 
 var app = builder.Build();
@@ -58,14 +59,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
-//app.UseAuthentication(); // Thêm middleware xác thực
 
-//app.UseAuthorization(); // Thêm middleware phân quyền
-
-app.UseCors("AllowSpecificOrigin"); // Sử dụng policy CORS
-
-//app.UseAuthorization();
+app.UseCors("AllowSpecificOrigin"); 
 
 app.MapControllers();
 

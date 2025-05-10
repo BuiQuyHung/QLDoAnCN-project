@@ -1,0 +1,178 @@
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+  }
+  
+  .error-message {
+    color: #dc3545; /* Màu đỏ Bootstrap */
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+  }
+  
+  .success-message {
+    color: #28a745; /* Màu xanh lá cây Bootstrap */
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+  }
+  
+  button {
+    background-color: #007bff; /* Màu xanh dương Bootstrap */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Bảng danh sách khoa */
+  h3 {
+    color: #555;
+    margin-top: 25px;
+    margin-bottom: 10px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden; /* Để border-radius hoạt động trên table */
+  }
+  
+  thead {
+    background-color: #f8f9fa; /* Màu xám nhạt Bootstrap */
+    color: #333;
+  }
+  
+  th {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  tbody tr {
+    transition: background-color 0.3s ease;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  tbody tr:hover {
+    background-color: #e0f7fa; /* Màu xanh nhạt khi hover */
+    cursor: pointer;
+  }
+  
+  td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  td:last-child {
+    text-align: center;
+  }
+  
+  td button {
+    margin: 5px;
+  }
+  
+  .selected {
+    background-color: #cce5ff !important; /* Màu xanh dương nhạt khi được chọn */
+  }
+  
+  /* Chi tiết khoa */
+  div[ng-reflect-ng-if] > h3 { /* Áp dụng style cho h3 bên trong div hiển thị chi tiết */
+    margin-top: 30px;
+  }
+  
+  div[ng-reflect-ng-if] > div { /* Áp dụng style cho các div chứa thông tin chi tiết */
+    padding: 10px 0;
+    border-bottom: 1px dotted #ccc;
+  }
+  
+  div[ng-reflect-ng-if] > div:last-child {
+    border-bottom: none;
+  }
+  
+  div[ng-reflect-ng-if] > div > strong {
+    font-weight: bold;
+    margin-right: 5px;
+    color: #333;
+  }
+  
+  /* Form thêm mới và chỉnh sửa */
+  div[ng-reflect-ng-if] > h3 { /* Tiêu đề form */
+    margin-top: 30px;
+    color: #007bff;
+  }
+  
+  form {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    display: inline-block; /* Để form không chiếm toàn bộ chiều ngang */
+  }
+  
+  form > div {
+    margin-bottom: 10px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: bold;
+  }
+  
+  input[type="text"] {
+    width: 250px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Để padding không làm tăng kích thước input */
+  }
+  
+  input[type="text"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+  
+  form button[type="submit"] {
+    background-color: #28a745; /* Màu xanh lá cây Bootstrap cho nút Lưu/Cập nhật */
+  }
+  
+  form button[type="submit"]:hover {
+    background-color: #1e7e34;
+  }
+  
+  form button[type="button"] {
+    background-color: #6c757d; /* Màu xám Bootstrap cho nút Hủy */
+  }
+  
+  form button[type="button"]:hover {
+    background-color: #545b62;
+  }
+  
+  /* Thông báo khi không có dữ liệu */
+  div:empty + div { /* Style cho div thông báo khi danh sách khoa rỗng */
+    font-style: italic;
+    color: #777;
+    margin-top: 15px;
+  }

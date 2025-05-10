@@ -25,11 +25,20 @@ CREATE TABLE ChuyenNganh (
     MaNganh VARCHAR(10) FOREIGN KEY REFERENCES Nganh(MaNganh)
 );
 
+CREATE TABLE DotDoAn (
+    MaDotDoAn VARCHAR(10) PRIMARY KEY,
+    TenDotDoAn NVARCHAR(200) NOT NULL,
+    KhoaHoc VARCHAR(10) NOT NULL,
+    NgayBatDau DATE,
+    NgayKetThuc DATE,
+    SoTuanThucHien INT
+);
+
 CREATE TABLE Lop (
     MaLop VARCHAR(10) PRIMARY KEY,
     TenLop NVARCHAR(100) NOT NULL,
-    KhoaHoc VARCHAR(10),
-    MaChuyenNganh VARCHAR(10) FOREIGN KEY REFERENCES ChuyenNganh(MaChuyenNganh)
+    MaChuyenNganh VARCHAR(10) FOREIGN KEY REFERENCES ChuyenNganh(MaChuyenNganh),
+    MaDotDoAn VARCHAR(10) FOREIGN KEY REFERENCES DotDoAn(MaDotDoAn)
 );
 
 CREATE TABLE SinhVien (
@@ -53,19 +62,20 @@ CREATE TABLE DeTai (
     MaDeTai VARCHAR(10) PRIMARY KEY,
     TenDeTai NVARCHAR(200) NOT NULL,
     MoTa TEXT,
-    ChuyenNganh NVARCHAR(100),
     ThoiGianThucHien INT,
     MaGV VARCHAR(10) FOREIGN KEY REFERENCES GiangVien(MaGV),
-    TrangThai VARCHAR(50) DEFAULT 'Chờ duyệt'
+    TrangThai VARCHAR(50) DEFAULT N'Chờ duyệt',
+    MaDotDoAn VARCHAR(10) FOREIGN KEY REFERENCES DotDoAn(MaDotDoAn)
 );
 
 CREATE TABLE PhanCong (
     MaDeTai VARCHAR(10),
     MaSV VARCHAR(10),
     NgayPhanCong DATE DEFAULT GETDATE(),
-    PRIMARY KEY (MaDeTai, MaSV),
+    MaDotDoAn VARCHAR(10) FOREIGN KEY REFERENCES DotDoAn(MaDotDoAn),
+    PRIMARY KEY (MaDeTai, MaSV)
     FOREIGN KEY (MaDeTai) REFERENCES DeTai(MaDeTai),
-    FOREIGN KEY (MaSV) REFERENCES SinhVien(MaSV)
+    FOREIGN KEY (MaSV) REFERENCES SinhVien(MaSV),
 );
 
 CREATE TABLE TienDo (
@@ -73,8 +83,8 @@ CREATE TABLE TienDo (
     MaDeTai VARCHAR(10) FOREIGN KEY REFERENCES DeTai(MaDeTai),
     MaSV VARCHAR(10) FOREIGN KEY REFERENCES SinhVien(MaSV),
     NgayNop DATETIME DEFAULT GETDATE(),
-    LoaiBaoCao VARCHAR(50) NOT NULL, 
-    TepDinhKem NVARCHAR(255), 
+    LoaiBaoCao VARCHAR(50) NOT NULL,
+    TepDinhKem NVARCHAR(255),
     GhiChu NVARCHAR(500)
 );
 
@@ -89,7 +99,8 @@ CREATE TABLE DanhGia (
 CREATE TABLE HoiDong (
     MaHoiDong VARCHAR(10) PRIMARY KEY,
     TenHoiDong NVARCHAR(100) NOT NULL,
-    NgayBaoVe DATE
+    NgayBaoVe DATE,
+    MaDotDoAn VARCHAR(10) FOREIGN KEY REFERENCES DotDoAn(MaDotDoAn)
 );
 
 CREATE TABLE ThanhVienHoiDong (
@@ -104,9 +115,40 @@ CREATE TABLE ThanhVienHoiDong (
 CREATE TABLE TaiKhoan (
     TenDangNhap VARCHAR(50) PRIMARY KEY,
     MatKhau VARCHAR(100) NOT NULL,
-    VaiTro VARCHAR(20) NOT NULL, 
-    MaNguoiDung VARCHAR(10) 
+    VaiTro VARCHAR(20) NOT NULL,
+    MaGV VARCHAR(10) FOREIGN KEY REFERENCES GiangVien(MaGV),
+    MaSV VARCHAR(10) FOREIGN KEY REFERENCES SinhVien(MaSV)
 );
+
+CREATE TABLE TaiKhoanDangNhap (
+    TenDangNhap VARCHAR(50) PRIMARY KEY,
+    MatKhau VARCHAR(100) NOT NULL,
+    VaiTro VARCHAR(20) NOT NULL,
+    MaNguoiDung VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE Log (
+    MaLog INT PRIMARY KEY IDENTITY,
+    TenDangNhap VARCHAR(50) FOREIGN KEY REFERENCES TaiKhoan(TenDangNhap),
+    ThoiGian DATETIME DEFAULT GETDATE(),
+    HanhDong NVARCHAR(200) NOT NULL,
+    MoTa NVARCHAR(500)
+);
+DELETE FROM TaiKhoan;
+--------------------------------------------------------------------------
+INSERT INTO TaiKhoan (TenDangNhap, MatKhau, VaiTro, MaGV, MaSV) VALUES
+('admin1', '12345', 'ADMIN', 'GV01', NULL),
+('sv07', 'password2', 'SV', NULL, 'SV07'),
+('gv02', 'password3', 'GV', 'GV02', NULL),
+('sv08', 'password4', 'SV', NULL, 'SV08'),
+('admin123', 'password5', 'ADMIN', NULL, NULL);
+
+INSERT INTO TaiKhoanDangNhap (TenDangNhap, MatKhau, VaiTro, MaNguoiDung) VALUES
+('admin', '12345', 'ADMIN', 'AD01'),
+('teacher1', 'teacherpass', 'GV', 'GV01'),
+('teacher2', 'teacherpass2', 'GV', 'GV02'),
+('student1', 'studentpass', 'SV', 'SV08'),
+('student2', 'studentpass2', 'SV', 'SV06');
 
 INSERT INTO Khoa (MaKhoa, TenKhoa)
 VALUES
@@ -157,6 +199,19 @@ VALUES
 ('GV03', N'Lê Minh Hường', N'Công nghệ Webn', 'h.le@abc.com', '0123456783'),
 ('GV04', N'Trần Thị Nụ', N'Công nghệ Web', 'i.tran@abc.com', '0123456784'),
 ('GV05', N'Vũ Minh Khôi', N'Công nghệ Web', 'k.vu@abc.com', '0123456780');
+
+INSERT INTO DotDoAn (MaDotDoAn, TenDotDoAn, KhoaHoc, NgayBatDau, NgayKetThuc, SoTuanThucHien)
+VALUES
+('DDA2025A', N'Đồ án tốt nghiệp khóa 2021-2025 đợt 1', 'K21', '2025-05-15', '2025-08-15', 13),
+('DDA2025B', N'Đồ án tốt nghiệp khóa 2021-2025 đợt 2', 'K21', '2025-09-01', '2025-12-15', 15),
+('DAK2026A', N'Đồ án kiến tập khóa 2022-2026 đợt 1', 'K22', '2026-01-10', '2026-03-30', 11),
+('DATN2024B', N'Đồ án tốt nghiệp khóa 2020-2024 bổ sung', 'K20', '2025-06-01', '2025-08-30', 12),
+('DAK2026B', N'Đồ án kiến tập khóa 2022-2026 đợt 2', 'K22', '2026-04-15', '2026-07-15', 13),
+('DDA2026A', N'Đồ án tốt nghiệp khóa 2022-2026 đợt 1', 'K22', '2026-05-15', '2026-08-15', 13),
+('DDA2024C', N'Đồ án tốt nghiệp khóa 2020-2024 đợt cuối', 'K20', '2025-10-01', '2025-12-31', 14),
+('DAK2027A', N'Đồ án kiến tập khóa 2023-2027 đợt 1', 'K23', '2027-01-15', '2027-04-05', 12),
+('DDA2027A', N'Đồ án tốt nghiệp khóa 2023-2027 đợt 1', 'K23', '2027-05-20', '2027-08-20', 13),
+('DATN2025A', N'Đồ án tốt nghiệp khóa 2021-2025 đặc biệt', 'K21', '2025-11-01', '2026-02-15', 16);
 
 INSERT INTO DeTai (MaDeTai, TenDeTai, MoTa, ChuyenNganh, ThoiGianThucHien, MaGV, TrangThai)
 VALUES ('DTCNTT01', N'Xây dựng hệ thống quản lý thư viện trực tuyến', N'Đồ án tập trung vào việc phát triển một ứng dụng web cho phép quản lý sách, độc giả và các hoạt động mượn trả sách của thư viện.', N'Công nghệ phần mềm', 15, 'GV01', N'Đã duyệt');

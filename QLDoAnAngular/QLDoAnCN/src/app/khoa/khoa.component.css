@@ -1,0 +1,177 @@
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.error-message {
+  color: #dc3545; 
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+}
+
+.success-message {
+  color: #28a745; 
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #007bff; 
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+h3 {
+  color: #555;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  overflow: hidden; 
+}
+
+thead {
+  background-color: #f8f9fa; 
+  color: #333;
+}
+
+th {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr {
+  transition: background-color 0.3s ease;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+  background-color: #e0f7fa; 
+  cursor: pointer;
+}
+
+td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+td:last-child {
+  text-align: center;
+}
+
+td button {
+  margin: 5px;
+}
+
+.selected {
+  background-color: #cce5ff !important; 
+}
+
+
+div[ng-reflect-ng-if] > h3 { 
+  margin-top: 30px;
+}
+
+div[ng-reflect-ng-if] > div { 
+  padding: 10px 0;
+  border-bottom: 1px dotted #ccc;
+}
+
+div[ng-reflect-ng-if] > div:last-child {
+  border-bottom: none;
+}
+
+div[ng-reflect-ng-if] > div > strong {
+  font-weight: bold;
+  margin-right: 5px;
+  color: #333;
+}
+
+/* Form thêm mới và chỉnh sửa */
+div[ng-reflect-ng-if] > h3 { 
+  margin-top: 30px;
+  color: #007bff;
+}
+
+form {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  display: inline-block; 
+}
+
+form > div {
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+  font-weight: bold;
+}
+
+input[type="text"] {
+  width: 250px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; 
+}
+
+input[type="text"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+form button[type="submit"] {
+  background-color: #28a745; 
+}
+
+form button[type="submit"]:hover {
+  background-color: #1e7e34;
+}
+
+form button[type="button"] {
+  background-color: #6c757d; 
+}
+
+form button[type="button"]:hover {
+  background-color: #545b62;
+}
+
+/* Thông báo khi không có dữ liệu */
+div:empty + div { 
+  font-style: italic;
+  color: #777;
+  margin-top: 15px;
+}

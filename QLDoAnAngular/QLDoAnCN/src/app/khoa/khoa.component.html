@@ -1,0 +1,63 @@
+<h2>Quản lý Khoa</h2>
+
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+<div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
+<button (click)="batDauThemMoi()">Thêm mới Khoa</button>
+
+<h3>Danh sách Khoa</h3>
+<table *ngIf="danhSachKhoa.length > 0">
+    <thead>
+        <tr>
+            <th>Mã Khoa</th>
+            <th>Tên Khoa</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let khoa of danhSachKhoa" (click)="hienThiChiTiet(khoa)" [class.selected]="khoa === selectedKhoa">
+            <td>{{ khoa.maKhoa }}</td>
+            <td>{{ khoa.tenKhoa }}</td>
+            <td>
+                <button (click)="batDauChinhSua(khoa); $event.stopPropagation()">Sửa</button>
+                <button (click)="xoaKhoa(khoa.maKhoa); $event.stopPropagation()">Xóa</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div *ngIf="danhSachKhoa.length === 0">Không có khoa nào.</div>
+
+<app-popup *ngIf="isViewingDetails" title="Chi tiết Khoa" (closed)="dongPopupChiTiet()">
+    <div><strong>Mã Khoa:</strong> {{ selectedKhoa?.maKhoa }}</div>
+    <div><strong>Tên Khoa:</strong> {{ selectedKhoa?.tenKhoa }}</div>
+</app-popup>
+
+<app-popup *ngIf="isAddingNew" title="Thêm mới Khoa" (closed)="dongPopupThemMoi()">
+    <form (ngSubmit)="themKhoa()">
+        <div>
+            <label for="maKhoa">Mã Khoa:</label>
+            <input type="text" id="maKhoa" name="maKhoa" [(ngModel)]="newKhoa.maKhoa" required>
+        </div>
+        <div>
+            <label for="tenKhoa">Tên Khoa:</label>
+            <input type="text" id="tenKhoa" name="tenKhoa" [(ngModel)]="newKhoa.tenKhoa" required>
+        </div>
+        <button type="submit">Lưu</button>
+        <button type="button" (click)="huyThemMoi()">Hủy</button>
+    </form>
+</app-popup>
+
+<app-popup *ngIf="isEditing && editingKhoa" title="Chỉnh sửa Khoa" (closed)="dongPopupChinhSua()">
+    <form (ngSubmit)="capNhatKhoa()">
+        <div>
+            <label for="maKhoa">Mã Khoa:</label>
+            <input type="text" id="maKhoa" name="maKhoa" [(ngModel)]="editingKhoa.maKhoa" [readonly]="true">
+        </div>
+        <div>
+            <label for="tenKhoa">Tên Khoa:</label>
+            <input type="text" id="tenKhoa" name="tenKhoa" [(ngModel)]="editingKhoa.tenKhoa" required>
+        </div>
+        <button type="submit">Cập nhật</button>
+        <button type="button" (click)="huyChinhSua()">Hủy</button>
+    </form>
+</app-popup>

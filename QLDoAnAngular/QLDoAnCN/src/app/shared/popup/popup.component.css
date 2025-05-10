@@ -1,0 +1,139 @@
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  width: 90%;
+  max-width: 700px;
+  box-sizing: border-box;
+  max-height: 100vh; 
+  overflow-y: auto;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.popup-header h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: #333;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: #777;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+/* === Form đẹp, 2 cột gọn gàng === */
+::ng-deep .popup-body form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 24px;
+  align-items: start;
+  font-family: inherit;
+}
+
+::ng-deep .popup-body form > .full-width {
+  grid-column: 1 / 3;
+}
+
+/* Label và input đồng đều */
+::ng-deep form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #333;
+}
+
+::ng-deep form input[type="text"],
+::ng-deep form input[type="number"],
+::ng-deep form input[type="date"],
+::ng-deep form select,
+::ng-deep form textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+::ng-deep form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+::ng-deep form input:focus,
+::ng-deep form select:focus,
+::ng-deep form textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Nút gọn đẹp */
+::ng-deep form button[type="submit"],
+::ng-deep form button[type="button"] {
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+::ng-deep form button[type="submit"] {
+  background-color: #28a745;
+  color: white;
+}
+
+::ng-deep form button[type="submit"]:hover {
+  background-color: #218838;
+}
+
+::ng-deep form button[type="button"] {
+  background-color: #6c757d;
+  color: white;
+}
+
+::ng-deep form button[type="button"]:hover {
+  background-color: #5a6268;
+}
+
+::ng-deep .popup-body .form-detai .button-group,
+::ng-deep .popup-body .button-group {
+  grid-column: 1 / 3;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
